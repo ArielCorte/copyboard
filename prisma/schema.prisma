@@ -3,16 +3,25 @@
 
 generator client {
     provider = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "mysql"
     url      = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
-model Example {
-    id        String   @id @default(cuid())
+model Copyboard {
+    id       String   @id @default(cuid())
+    code     String   @unique
+    copies   Copy[]
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+}
+
+model Copy {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    copyboardId String
+    copyboard   Copyboard @relation(fields: [copyboardId], references: [id])
+    content     String
 }
