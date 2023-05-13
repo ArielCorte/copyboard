@@ -9,6 +9,8 @@ import { Card, CardContent, CardHeader, } from "~/components/ui/card";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Separator } from "~/components/ui/separator";
+import { CopyToClipboard } from "react-copy-to-clipboard"
+
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
@@ -139,17 +141,12 @@ export const CopyCard: React.FC<CopyCardProps> = ({ deleteCopy, ...copy }) => {
 
 export const CopyToClipboardButton: React.FC<{ textToCopy: string }> = ({ textToCopy }) => {
 
-    async function copyToClipboard() {
-        if (navigator.clipboard) {
-            await navigator.clipboard.writeText(textToCopy)
-            console.log("copied")
-        }
-    }
-
     return (
-        <Button variant="outline" onClick={() => copyToClipboard()}>
-            <ClipboardCopy />
-        </Button >
+        <CopyToClipboard text={textToCopy}>
+            <Button variant="outline">
+                <ClipboardCopy />
+            </Button >
+        </CopyToClipboard>
     )
 
 }
