@@ -21,8 +21,25 @@ const Home: NextPage = () => {
 
     const { data: copyboard, refetch } = api.copies.getCopyboardCopies.useQuery({ copyboardCode });
 
-    const addCopy = api.copies.addCopy.useMutation({ onSuccess: () => refetch() });
-    const removeCopy = api.copies.removeCopy.useMutation({ onSuccess: () => refetch() });
+    const { toast } = useToast()
+
+    const addCopy = api.copies.addCopy.useMutation({
+        onSuccess: async () => {
+            toast({
+                description: "Added copy"
+            })
+            await refetch()
+        }
+    });
+    const removeCopy = api.copies.removeCopy.useMutation({
+        onSuccess: async () => {
+            toast({
+                variant: "destructive",
+                description: "Removed copy"
+            })
+            await refetch()
+        }
+    });
 
     const submitCopy = () => {
         addCopy.mutate({ content: copyContent, copyboardCode })
