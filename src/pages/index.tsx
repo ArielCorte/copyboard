@@ -12,6 +12,7 @@ import { Separator } from "~/components/ui/separator";
 import { CopyToClipboard } from "react-copy-to-clipboard"
 
 import { api } from "~/utils/api";
+import { useToast } from "~/components/ui/use-toast";
 
 const Home: NextPage = () => {
     const [copyboardCode, setCopyboardCode] = useState("080091");
@@ -140,9 +141,15 @@ export const CopyCard: React.FC<CopyCardProps> = ({ deleteCopy, ...copy }) => {
 }
 
 export const CopyToClipboardButton: React.FC<{ textToCopy: string }> = ({ textToCopy }) => {
+    const { toast } = useToast()
 
     return (
-        <CopyToClipboard text={textToCopy}>
+        <CopyToClipboard text={textToCopy} onCopy={() => {
+            console.log('copied')
+            toast({
+                description: "Copied to clipboard! 😊",
+            })
+        }}>
             <Button variant="outline">
                 <ClipboardCopy />
             </Button >
