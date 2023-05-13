@@ -100,9 +100,7 @@ const Home: NextPage = () => {
                                 <div className="font-bold text-3xl bg-gray-400 p-1 rounded-md flex items-center justify-center">
                                     {copyboardCode}
                                 </div>
-                                <Button variant="outline">
-                                    <ClipboardCopy />
-                                </Button>
+                                <CopyToClipboardButton textToCopy={copyboardCode} />
                             </div>
                         </div>
                     </div>
@@ -127,9 +125,7 @@ export const CopyCard: React.FC<CopyCardProps> = ({ deleteCopy, ...copy }) => {
                     <Button variant="outline" onClick={() => deleteCopy(copy.id)}>
                         <Trash2 />
                     </Button>
-                    <Button variant="outline">
-                        <ClipboardCopy />
-                    </Button>
+                    <CopyToClipboardButton textToCopy={copy.content} />
                 </div>
             </CardHeader>
             <CardContent>
@@ -139,4 +135,21 @@ export const CopyCard: React.FC<CopyCardProps> = ({ deleteCopy, ...copy }) => {
             </CardContent>
         </Card>
     )
+}
+
+export const CopyToClipboardButton: React.FC<{ textToCopy: string }> = ({ textToCopy }) => {
+
+    async function copyToClipboard() {
+        if (navigator.clipboard) {
+            await navigator.clipboard.writeText(textToCopy)
+            console.log("copied")
+        }
+    }
+
+    return (
+        <Button variant="outline" onClick={() => copyToClipboard()}>
+            <ClipboardCopy />
+        </Button >
+    )
+
 }
