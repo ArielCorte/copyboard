@@ -8,7 +8,7 @@ import { Toaster } from "~/components/ui/toaster";
 const MyApp: AppType = ({ Component, pageProps }) => {
     return (
         <>
-            <Component {...pageProps} />;
+            <Component {...pageProps} />
             <Toaster />
         </>
     );
